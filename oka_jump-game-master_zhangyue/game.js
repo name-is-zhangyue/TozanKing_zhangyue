@@ -143,10 +143,10 @@ function preload() {
   clearSound.src = './public/sound/clear.mp3';
 
   // Load the images for the player--------修改的地方---------変わったところ----------------------------------
-  walkingImg1 = loadImage('./public/img/tsukakenlogoOutput-2.png');
-  walkingImg2 = loadImage('./public/img/tsukaken.png');
-  jumpingImg = loadImage('./public/img/tsukaken_with_body.png');
-  standingImg = loadImage('./public/img/tsukaken.png');
+  walkingImg1 = loadImage('./public/img/leftLeg-removebg-preview.png');
+  walkingImg2 = loadImage('./public/img/rightLeg-removebg-preview.png');
+  jumpingImg = loadImage('./public/img/standPig-removebg-preview.png');
+  standingImg = loadImage('./public/img/standPig-removebg-preview.png');
   // ---------------------------------修改的地方---------ここまで------------------------------------
 }
 

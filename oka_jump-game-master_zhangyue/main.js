@@ -49,6 +49,7 @@ let stageNum = 0;
 let jumpSound = null;
 let gameStartSound = null;
 let clearSound = null;
+let walkingImg1, walkingImg2, jumpingImg, standingImg;　//-----修改的地方--------追加したところ---------------------
 
 //load assets before rendering  预加载函数
 function preload() {
@@ -61,6 +62,13 @@ function preload() {
   gameStartSound.src = './public/sound/game_start.mp3';
   clearSound = new Audio();
   clearSound.src = './public/sound/clear.mp3';
+  // Load the images for the player--------修改的地方---------変わったところ----------------------------------
+  walkingImg1 = loadImage('./public/img/leftLeg-removebg-preview.png');
+  walkingImg2 = loadImage('./public/img/rightLeg-removebg-preview.png');
+  jumpingImg = loadImage('./public/img/tsukaken_with_body.png');
+  standingImg = loadImage('./public/img/standPig-removebg-preview.png');
+  // ---------------------------------修改的地方---------ここまで----------
+
 }
 
 //initialize HTML canvas and game objects    初始化函数
@@ -157,26 +165,28 @@ class Player {
     this.s = size;
     this.speedX = 0;
     this.speedY = 0;
+    this.frameCount = 0; // 用于动画的帧计数
     this.isJumping = false;
   }
-
+//绘制玩家的角色,静止状态和走路状态-------------------------------------修改的地方---------変わったことろ------------------------------------
+//   draw() {
+//     textSize(this.s * 2);
+//     this.isJumping ? text("❤️", this.x, this.y) : text("🏃", this.x, this.y);//这里是那个player的样子
+//   }
   draw() {
-    textSize(this.s);
-    this.isJumping ? text("🕺", this.x, this.y) : text("🚶", this.x, this.y);
-  }
-
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-   
-    if (stageNum === 0 && this.y + this.s > height) {
-      this.y = height - this.s;
-      this.speedY = 0;
-      if (this.isJumping) {
-        this.isJumping = false;
-        this.speedX = 0;
+    this.frameCount++;
+    if (this.isJumping) {
+      image(jumpingImg, this.x - this.s, this.y - this.s, this.s * 2, this.s * 2);
+    } else if (this.speedX !== 0) {
+      if (this.frameCount % 30 < 15) {
+        image(walkingImg1, this.x - this.s, this.y - this.s, this.s * 2, this.s * 2);
+      } else {
+        image(walkingImg2, this.x - this.s, this.y - this.s, this.s * 2, this.s * 2);
       }
+    } else {
+      image(standingImg, this.x - this.s, this.y - this.s, this.s * 2, this.s * 2);
     }
+  }
 
     if (stageNum === 2 && this.y - this.s < 0) {
       this.speedY *-1;
